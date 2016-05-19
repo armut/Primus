@@ -141,21 +141,32 @@ public class BackLabel extends JLabel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.darkGray);
+        Graphics2D g2 = (Graphics2D)g;
 
+        //Dugumlerin cizildigi yer
         for(int i = 0; i < vex.length; i++ ) {
             g.fillOval(vex[i][0]-(r/2), vex[i][1]-(r/2), r, r);
         }
 
+        //Edge'lerin cizildigi yer
         for(int j = 0; j < edge.length; j++) {
             for(int k = 0; k < edge.length; k++) {
                 if(edge[j][k] != Integer.MAX_VALUE) { //mim
+                    int x1 = vex[j][0]+(r/2);
+                    int y1 = vex[j][1]+(r/2);
+                    int x2 = vex[k][0]+(r/2);
+                    int y2 = vex[k][1]+(r/2);
+                    g.setColor(Color.black);
                     g.drawLine(vex[j][0]+(r/2),vex[j][1]+(r/2),vex[k][0]+(r/2),vex[k][1]+(r/2));
+                    g.setColor(Color.BLUE);
+                    g.setFont(new Font(g.getFont().getFontName(),Font.PLAIN,9));
+                    g.drawString(String.valueOf(edge[j][k])+"km",(x1+x2)/2,(y1+y2)/2);
                 }
             }
         }
 
+        // mst'nin cizildigi yer
         g.setColor(Color.red);
-        Graphics2D g2 = (Graphics2D)g;
         g2.setStroke(new BasicStroke(4));
         for(int l = 0; l < edge.length-1; l++) {
             g2.drawLine( vex[ Primus.mst[l][0] ][ 0 ] + (r/2),
@@ -163,6 +174,7 @@ public class BackLabel extends JLabel {
                          vex[ Primus.mst[l][1] ][ 0 ] + (r/2),
                          vex[ Primus.mst[l][1] ][ 1 ] + (r/2) );
         }
+
 
     }
 
