@@ -152,27 +152,38 @@ public class BackLabel extends JLabel {
         for(int j = 0; j < edge.length; j++) {
             for(int k = 0; k < edge.length; k++) {
                 if(edge[j][k] != Integer.MAX_VALUE) { //mim
-                    int x1 = vex[j][0]+(r/2);
+                    /*int x1 = vex[j][0]+(r/2);
                     int y1 = vex[j][1]+(r/2);
                     int x2 = vex[k][0]+(r/2);
-                    int y2 = vex[k][1]+(r/2);
+                    int y2 = vex[k][1]+(r/2); */
                     g.setColor(Color.black);
-                    g.drawLine(vex[j][0]+(r/2),vex[j][1]+(r/2),vex[k][0]+(r/2),vex[k][1]+(r/2));
-                    g.setColor(Color.BLUE);
-                    g.setFont(new Font(g.getFont().getFontName(),Font.PLAIN,9));
-                    g.drawString(String.valueOf(edge[j][k])+"km",(x1+x2)/2,(y1+y2)/2);
+                    g.drawLine(vex[j][0],vex[j][1],vex[k][0],vex[k][1]);
+                    //g.setColor(Color.BLUE);
+                    //g.drawString(String.valueOf(edge[j][k])+"km",(x1+x2)/2,(y1+y2)/2);
                 }
             }
         }
 
         // mst'nin cizildigi yer
-        g.setColor(Color.red);
         g2.setStroke(new BasicStroke(4));
         for(int l = 0; l < edge.length-1; l++) {
-            g2.drawLine( vex[ Primus.mst[l][0] ][ 0 ] + (r/2),
-                         vex[ Primus.mst[l][0] ][ 1 ] + (r/2),
-                         vex[ Primus.mst[l][1] ][ 0 ] + (r/2),
-                         vex[ Primus.mst[l][1] ][ 1 ] + (r/2) );
+            g.setColor(Color.red);
+            g2.drawLine( vex[ Primus.mst[l][0] ][ 0 ],
+                         vex[ Primus.mst[l][0] ][ 1 ],
+                         vex[ Primus.mst[l][1] ][ 0 ],
+                         vex[ Primus.mst[l][1] ][ 1 ] );
+
+            int x1 = vex[ Primus.mst[l][0] ][ 0 ];
+            int y1 = vex[ Primus.mst[l][0] ][ 1 ];
+            int x2 = vex[ Primus.mst[l][1] ][ 0 ];
+            int y2 = vex[ Primus.mst[l][1] ][ 1 ];
+            int x = (x1+x2)/2;
+            int y = (y1+y2)/2;
+            g.setColor(Color.black);
+            g.fillRect(x,y-10,32,10);
+            g.setColor(Color.cyan);
+            g.setFont(new Font(g.getFont().getFontName(),Font.PLAIN,9));
+            g.drawString(String.valueOf(edge[ Primus.mst[l][0] ][ Primus.mst[l][1] ])+"km",x,y);
         }
 
 
