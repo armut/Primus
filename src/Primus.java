@@ -1,8 +1,6 @@
-import org.apache.poi.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.*;
@@ -15,6 +13,7 @@ public class Primus extends JFrame {
     public static ImageIcon img = new ImageIcon("map-reduced2.jpg");
     public static int[][] mst;
     public static int[][] nexus = new int[81][81];
+    private String[] elviye = new String[81];
 
     public Primus() {
         initUI();
@@ -37,6 +36,7 @@ public class Primus extends JFrame {
 
 
     private void getXL() throws IOException {
+        //mesafe matrisini almak icin:
         File f = new File("edges.xlsx");
         FileInputStream fist = new FileInputStream(f);
         XSSFWorkbook workbook = new XSSFWorkbook(fist);
@@ -44,9 +44,21 @@ public class Primus extends JFrame {
         for(Row row : sheet) {
             for(Cell cell : row) {
                 nexus[row.getRowNum()][cell.getColumnIndex()] = (int)cell.getNumericCellValue();
-                //System.out.println((int)cell.getNumericCellValue());
             }
         }
+
+        //iller dizisini almak icin:
+        File f2 = new File("guncellenmis.xlsx");
+        FileInputStream fist2 = new FileInputStream(f2);
+        XSSFWorkbook workbook2 = new XSSFWorkbook(fist2);
+        Sheet sheet2 = workbook2.getSheet("Sheet1");
+        Row row = sheet2.getRow(0);
+        Cell cell;
+        for(int i = 2; i < elviye.length + 2; i++) {
+            cell = row.getCell(i);
+            elviye[i-2] = cell.getStringCellValue();
+        }
+
 
     }
 
@@ -85,11 +97,12 @@ public class Primus extends JFrame {
             }
             visited[v] = 1;
             total+=min;
-            System.out.println( u + "->" + v + " weight: " + min );
+            System.out.println( elviye[u] + "->" + elviye[v] + "\tmesafe: " + min + "km");
             mst[c][0] = u; mst[c][1] = v;
         }
 
-        System.out.println( "total weight is " + total );
+        System.out.println( "------------------------------" );
+        System.out.println( "Toplam mesafe: " + total + "km" );
 
     }
 
