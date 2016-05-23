@@ -79,7 +79,7 @@ public class Primus extends JFrame {
             }
         }
 
-        visited[0]=1;
+        visited[5]=1;
         for( int c = 0; c < edge.length-1; c++) {
             min = Integer.MAX_VALUE;
             for(int i = 0; i< edge.length; i++) {
