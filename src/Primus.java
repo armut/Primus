@@ -14,6 +14,7 @@ public class Primus extends JFrame {
     public static int[][] mst;
     public static int[][] nexus = new int[81][81];
     private String[] elviye = new String[81];
+    private String[] result = new String[80];
 
     public Primus() {
         initUI();
@@ -97,9 +98,29 @@ public class Primus extends JFrame {
             }
             visited[v] = 1;
             total+=min;
-            System.out.println( elviye[u] + "->" + elviye[v] + "\tmesafe: " + min + "km");
+            //System.out.println( elviye[u] + "->" + elviye[v] + "\tmesafe: " + min + "km");
+            result[c] = elviye[u] + "->" + elviye[v] + "\tmesafe: " + min + "km";
             mst[c][0] = u; mst[c][1] = v;
         }
+
+        /* Sonucu sıralı bir biçimde yazdırmak için */
+        String tmp;
+        for (int i = 0; i < result.length; i++) {
+            tmp = result[i];
+            for(int j = 0; j < result.length; j++) {
+                if(i == j) continue;
+                int x = tmp.compareTo(result[j]);
+                if(x < 0) {
+                    tmp = result[j];
+                    result[j] = result[i];
+                    result[i] = tmp;
+                }
+            }
+        }
+        for(int k = 0; k < result.length; k++) {
+            System.out.println( result[k] );
+        }
+        /* ----------------------------------------- */
 
         System.out.println( "------------------------------" );
         System.out.println( "Toplam mesafe: " + total + "km" );
